@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ListaDeNotas from "./components/ListaDeNotas.jsx";
 import FormularioCadastro from "./components/FormularioCadastro.jsx";
+import ListaDeCategorias from "./components/ListaDeCategorias.jsx";
 import "./css/App.css";
 
 class App extends Component {
@@ -8,7 +9,15 @@ class App extends Component {
     super();
     this.state = {
       notas: [],
+      categorias: [],
     };
+  }
+
+  adicionarCategoria(nomeCategoria) {
+    console.log(nomeCategoria);
+    const novasCategorias = [...this.state.categorias, nomeCategoria];
+    const novoEstado = { ...this.state, categorias: novasCategorias };
+    this.setState(novoEstado);
   }
 
   apagarNotas(index) {
@@ -32,10 +41,16 @@ class App extends Component {
     return (
       <section className="conteudo">
         <FormularioCadastro criarNota={this.criarNota.bind(this)} />
-        <ListaDeNotas
-          notas={this.state.notas}
-          apagarNotas={this.apagarNotas.bind(this)}
-        />
+        <main className="conteudo-principal">
+          <ListaDeCategorias
+            categorias={this.state.categorias}
+            adicionarCategoria={this.adicionarCategoria.bind(this)}
+          />
+          <ListaDeNotas
+            notas={this.state.notas}
+            apagarNotas={this.apagarNotas.bind(this)}
+          />
+        </main>
       </section>
     );
   }
